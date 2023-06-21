@@ -1,0 +1,297 @@
+<div class="container">
+  <div class="row justify-content-around opacity-animation p-t-140 mb-4">
+    <div class="col-5 justify-content-start align-items-start gap-2 flex-column d-flex p-0">
+      <h1>Offers:</h1>
+      <button
+        *ngIf="!!localStorageRef.getItem('adminRole')"
+        class="btn btn-outline-primary text-nowrap add-offer-button d-flex justify-content-center align-items-center"
+        data-bs-toggle="modal"
+        data-bs-target="#addModal"
+      >
+        <i class="ri-add-line fs-4"></i>
+        <p class="mb-0">Add</p>
+      </button>
+    </div>
+
+    <div class="col-5 justify-content-end align-items-center h-auto d-flex p-0">
+      <button
+        class="btn btn-outline-primary refresh-button d-flex justify-content-center align-items-center"
+        (click)="getAllOffers()"
+      >
+        <i class="ri-refresh-line fs-4"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-group justify-content-center d-flex gap-4 opacity-animation pb-4">
+    <div class="card d-flex" *ngFor="let offer of offers; let i = index">
+      <img [src]="offer?.url" class="card-img-top h-215" [alt]="offer?.name">
+      <div class="card-body">
+        <h5 class="card-title">{{ offer?.name }}</h5>
+        <p class="card-text">{{ offer?.description | capitalize }}</p>
+        <p>People count: {{ offer?.peopleCount ?? '-' }}</p>
+        <p>Transport: {{ getTransportType(offer.peopleCount) }}
+        </p>
+        <p>Travel day: {{ offer?.day ? (offer?.day | date:'dd.MM.yyyy') : '-' }}</p>
+        <p>
+          Price: {{ offer?.price ? (offer.price | currency:'USD':'symbol':'1.0-2') : '-' }}
+        </p>
+        <p
+          *ngIf="offer?.sightseeingPlan?.length > 0"
+          class="preview text-primary d-flex align-items-center plan m-0 fit-content"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#plan' + i"
+        >
+          <i class="ri-arrow-down-s-line arrow-icon fs-2"></i>
+          <span class="ps-2">Sightseeing</span>
+        </p>
+        <ul *ngIf="offer?.sightseeingPlan?.length > 0" [id]="'plan' + i" class="collapse list-group list-group-flush" #listPlan>
+          <li *ngFor="let point of offer?.sightseeingPlan" class="list-group-item">
+            {{ point }}
+          </li>
+        </ul>
+        <p
+          class="d-flex mt-3 text-info preview align-items-center fit-content"
+          (click)="addToOfferShopBox(offer)"
+        >
+          <i class="ri-add-line me-2 text-center fs-2"></i>Add to shopping cart
+        </p>
+        <div
+          class="d-flex align-items-center text-danger preview fit-content"
+          (click)="deleteOffer(offer)"
+          *ngIf="!!localStorageRef.getItem('adminRole') && !(offer | isInArray: mostPickedPlaces)"
+        >
+          <i class="ri-delete-bin-2-line text-danger fs-3 me-2"></i>
+          Delete offer
+        </div>
+      </div>
+      <div
+        class="position-absolute all-inclusive fs-1"
+        *ngIf="offer?.allInclusive"
+      >
+        <i class="ri-star-fill"></i>
+      </div>
+      <div
+        *ngIf="!!localStorageRef.getItem('adminRole')"
+        class="position-absolute edit-icon fs-1"
+      >
+        <i class="ri-pencil-fill text-dark" (click)="setEditFormValues(offer)" data-bs-toggle="modal" data-bs-target="#editModal"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addModal" #addModal tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add new offer</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="resetAddOfferForm()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addOfferForm">
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Add image:</label>
+            <input
+              formControlName="url"
+              (change)="getFile($event)"
+              class="form-control"
+              type="file"
+              id="formFile"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="name" class="col-form-label">Place name:</label>
+            <input
+              formControlName="name"
+              type="text"
+              class="form-control"
+              id="name"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Trip plan:</label>
+            <input
+              placeholder="Write after comma"
+              formControlName="sightseeingPlan"
+              type="text"
+              class="form-control"
+              id="recipient-name"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="date-input-day" class="col-form-label">Travel day:</label>
+            <input
+              formControlName="day"
+              type="date"
+              class="form-control"
+              id="date-input-day"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="price-input" class="col-form-label">Price:</label>
+            <input
+              formControlName="price"
+              type="text"
+              class="form-control"
+              id="price-input"
+            >
+          </div>
+          <div class="mb-3">
+            <div class="form-check">
+              <input
+                formControlName="allInclusive"
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              >
+              <label class="form-check-label" for="flexCheckDefault" >
+                Allinclusive
+              </label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea
+              formControlName="description"
+              class="form-control"
+              id="message-text"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="resetAddOfferForm()"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          data-bs-dismiss="modal"
+          class="btn btn-primary"
+          (click)="addOffer()"
+        >
+          Add offer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editModal" #editModal tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleEditModalLabel">Edytuj ofertę</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="resetAddOfferForm()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editOfferForm">
+          <div class="mb-3">
+            <label for="editFormFile" class="form-label">Add image:</label>
+            <input
+              formControlName="url"
+              (change)="getFile($event, true)"
+              class="form-control"
+              type="file"
+              id="editFormFile"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="edit-name" class="col-form-label">Place name:</label>
+            <input
+              formControlName="name"
+              type="text"
+              class="form-control"
+              id="edit-name"
+            >
+          </div>
+          <div class="mb-3" *ngIf="!!localStorageRef.getItem('adminRole')">
+            <label for="name" class="col-form-label">People count:</label>
+            <input
+              placeholder="Liczba osób"
+              formControlName="peopleCount"
+              type="text"
+              class="form-control"
+              id="count-people"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="date-input-day-edit" class="col-form-label">Travel day:</label>
+            <input
+              formControlName="day"
+              type="date"
+              class="form-control"
+              id="date-input-day-edit"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="price-input-edit" class="col-form-label">Price:</label>
+            <input
+              formControlName="price"
+              type="text"
+              class="form-control"
+              id="price-input-edit"
+            >
+          </div>
+          <div class="mb-3">
+            <label for="edit-recipient-name" class="col-form-label">Trip plan:</label>
+            <input
+              placeholder="Write after comma"
+              formControlName="sightseeingPlan"
+              type="text"
+              class="form-control"
+              id="edit-recipient-name"
+            >
+          </div>
+          <div class="mb-3">
+            <div class="form-check">
+              <input
+                formControlName="allInclusive"
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="editFlexCheckDefault"
+              >
+              <label class="form-check-label" for="editFlexCheckDefault" >
+                Allinclusive
+              </label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea
+              formControlName="description"
+              class="form-control"
+              id="edit-message-text"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="resetAddOfferForm()"
+        >
+          Cancel
+        </button>
+        <button
+          data-bs-dismiss="modal"
+          type="button"
+          class="btn btn-primary"
+          (click)="editOffer()"
+        >
+          Edit offer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

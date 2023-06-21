@@ -1,0 +1,65 @@
+<div
+  class="carousel-wrapper opacity-animation text-center p-t-160 position-relative m-auto"
+  *ngIf="images && images.length"
+>
+  <div class="image-wrapper position-relative" *ngFor="let image of images; let i = index">
+    <img
+      [src]="image?.url"
+      [alt]="image?.name"
+      class="{{ selectedIndex === i ? 'active' : '' }}"
+    >
+    <div class="position-absolute bottom-0 text {{ selectedIndex === i ? '' : 'd-none' }}">
+      <p>{{ image?.name }}</p>
+    </div>
+    <div class="arrow-left position-absolute top-0 {{ selectedIndex === i ? '' : 'd-none' }}">
+      <div>
+        <i (click)="prevClick()" class="ri-arrow-left-s-line fs-1"></i>
+      </div>
+    </div>
+    <div class="arrow-right position-absolute top-0 {{ selectedIndex === i ? '' : 'd-none' }}">
+      <div>
+        <i (click)="nextClick()"  class="ri-arrow-right-s-line fs-1"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row opacity-animation m-t-80" *ngIf="mostPickedPlacesList?.length > 0">
+  <div class="col-12 justify-content-center d-flex mb-4">
+    <h1>The most popular offers:</h1>
+  </div>
+</div>
+
+<div class="card-group justify-content-center d-flex gap-4 opacity-animation pb-4">
+  <div class="card d-flex" *ngFor="let place of mostPickedPlacesList; let i = index">
+    <img [src]="place?.url" class="h-215 card-img-top" [alt]="place?.id">
+    <div class="card-body">
+      <h5 class="card-title">{{ place?.name }}</h5>
+      <p class="card-text">{{ place?.description | capitalize }}</p>
+      <p>Travel day: {{ place?.day ? (place?.day | date:'dd.MM.yyyy') : '-' }}</p>
+      <p>
+        Price: {{ place?.price ? (place.price | currency:'USD':'symbol':'1.0-2') : '-' }}
+      </p>
+      <p
+        *ngIf="place?.sightseeingPlan?.length > 0"
+        class="preview text-primary d-flex align-items-center plan m-0"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#plan' + i"
+      >
+        <i class="ri-arrow-down-s-line arrow-icon fs-2"></i>
+        <span class="ps-2">Sightseeing</span>
+      </p>
+      <ul *ngIf="place?.sightseeingPlan?.length > 0" [id]="'plan' + i" class="collapse list-group list-group-flush" #listPlan>
+        <li *ngFor="let point of place?.sightseeingPlan" class="list-group-item">
+          {{ point }}
+        </li>
+      </ul>
+    </div>
+    <div
+      class="position-absolute all-inclusive fs-1"
+      *ngIf="place?.allInclusive"
+    >
+      <i class="ri-star-fill"></i>
+    </div>
+  </div>
+</div>

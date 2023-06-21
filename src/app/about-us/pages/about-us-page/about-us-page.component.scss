@@ -1,0 +1,136 @@
+.p-t-140 {
+  padding-top: 140px;
+}
+
+.m-t-100 {
+  margin-top: 100px;
+}
+
+.w-270 {
+  width: 270px !important;
+}
+
+.contact-row {
+  width: 100%;
+  height: 100%;
+}
+
+.w-600 {
+  max-width: 600px;
+}
+
+.gap-90-0 {
+  gap: 0 !important;
+}
+
+.slideInFromLeft {
+  animation-name: slideInFromLeft;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.slideInFromRight {
+  animation-name: slideInFromRight;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.slideInFromBottom {
+  animation: slideFromBottom;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes slideFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.cls-1{fill:#e0dfe6;}.cls-2{fill:#3aad49;}.cls-3,.cls-4,.cls-5,.cls-7{fill:none;stroke-linecap:round;stroke-linejoin:round;}.cls-3,.cls-5,.cls-7{stroke:#525d7d;}.cls-3{stroke-width:6px;}.cls-4{stroke:#535d7d;}.cls-4,.cls-5{stroke-width:3px;}.cls-6{fill:#3aae49;}.cls-7{stroke-width:4px;}
+
+svg {
+  width: 320px;
+}
+
+.mount { animation: popup 1s ease-in 1; }
+
+@keyframes popup {
+  0% { transform: scaleY(.5); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+#baloon { animation: fly 5s infinite alternate; }
+
+@keyframes fly {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(18px, 15px); }
+}
+
+#heart { animation: heartbeat 3s alternate infinite; }
+
+@keyframes heartbeat {
+  0% { transform: scale(1,1); }
+  100% { transform: scale(.97,.97); }
+}
+
+#star { animation: shine 3s alternate infinite; }
+
+@keyframes shine {
+  0% { transform: skewX(0); opacity:.8; }
+  100% { transform: skewX(1deg); opacity:1; }
+}
+
+#arrow { animation: arrow .3s ease-in 1; }
+
+@keyframes arrow {
+  0% { transform: translate(190px, -90px); opacity: 0; }
+  100% { transform: translate(0,0);; opacity: 1; }
+}
+
+#flag {
+  fill:#3AAE49;
+  fill-opacity:1;
+  stroke-width:5;
+  stroke:#525d7d;
+  display:inline;
+}
+
+@media (min-width: 992px) {
+  .gap-90-0 {
+    gap: 90px !important;
+  }
+  svg {
+    width: 450px;
+  }
+}

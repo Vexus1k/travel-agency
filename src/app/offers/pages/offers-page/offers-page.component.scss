@@ -1,0 +1,78 @@
+.all-inclusive {
+  top: 5px;
+  right: 10px;
+  color: #FED766;
+}
+
+.edit-icon {
+  top: 5px;
+  left: 10px;
+  cursor: pointer;
+}
+
+.h-215 {
+  height: 215px;
+}
+
+.preview {
+  cursor: pointer;
+}
+
+.fit-content {
+  width: fit-content !important;
+}
+
+.arrow-icon {
+  transition: .4s;
+}
+
+.refresh-button:active {
+  transform: rotate(360deg);
+}
+
+.card-body:has(.show) .arrow-icon {
+  transform: rotate(-180deg);
+  transition: .4s transform;
+}
+
+.p-t-140 {
+  padding-top: 140px;
+}
+
+.card {
+  max-width: 370px !important;
+  flex: unset !important;
+}
+
+.card-group {
+  flex-flow: row wrap !important;
+}
+
+.refresh-button {
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  transition: transform 0.3s ease;
+}
+
+.add-offer-button {
+  width: fit-content;
+}
+
+.opacity-animation {
+  animation-name: opacity;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+
+  }
+  100% {
+    opacity: 1;
+
+  }
+}

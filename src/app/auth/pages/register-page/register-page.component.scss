@@ -1,0 +1,21 @@
+.register-wrapper {
+  border-radius: 10px;
+  box-shadow: 3px 3px 6px #767676;
+
+  .icon-login-route {
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+  }
+
+  .icon {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    background: #433E49;
+  }
+
+  .form-control {
+    height: 52px;
+  }
+}
