@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'devideWords'
 })
 export class DevideWordsPipe implements PipeTransform {
-  transform(value: string): string {
+  public transform(value: string): string {
     if (!value) {
       return '';
     }
