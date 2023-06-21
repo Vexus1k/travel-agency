@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
-import { IOffer } from "../../../core/interfaces/IOffer";
+import { IOffer } from "../../../core/interfaces";
 import { DataService } from "../../../core/services/DataService";
 
 @Injectable()

@@ -109,7 +109,7 @@ export class ShoppingCartPageComponent implements OnInit {
           }
 
           if (isEqual(offer, document.data())) {
-            this._dataService.deleteOfferr(dbName, document.id).subscribe();
+            this._dataService.deleteOffer(dbName, document.id).subscribe();
 
             if (offer?.peopleCount) {
               this._dataService.addOffer({...offer, peopleCount: (+offer.peopleCount + +count).toString() }, dbName);

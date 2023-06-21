@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IOffer } from "../../../core/interfaces/IOffer";
+import { IOffer } from "../../../core/interfaces";
 
 @Injectable({
   providedIn: 'root'

@@ -103,7 +103,7 @@ export class OffersPageComponent {
         }
 
         if (isEqual(offer, document.data())) {
-          this._dataService.deleteOfferr(dbName, document.id).pipe(finalize(() => {
+          this._dataService.deleteOffer(dbName, document.id).pipe(finalize(() => {
             // sub.unsubscribe(); // No need to unsubscribe from a non-existing subscription
           })).subscribe(() => {
             this.offers.forEach((a, index) => {
