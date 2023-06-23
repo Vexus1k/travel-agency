@@ -47,7 +47,7 @@
         [attr.data-bs-target]="'#plan' + i"
       >
         <i class="ri-arrow-down-s-line arrow-icon fs-2"></i>
-        <span class="ps-2">Sightseeing</span>
+        <span class="ps-2">Sightseeing plan</span>
       </p>
       <ul *ngIf="place?.sightseeingPlan?.length > 0" [id]="'plan' + i" class="collapse list-group list-group-flush" #listPlan>
         <li *ngFor="let point of place?.sightseeingPlan" class="list-group-item">

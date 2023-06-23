@@ -43,7 +43,7 @@
           [attr.data-bs-target]="'#plan' + i"
         >
           <i class="ri-arrow-down-s-line arrow-icon fs-2"></i>
-          <span class="ps-2">Sightseeing</span>
+          <span class="ps-2">Sightseeing plan</span>
         </p>
         <ul *ngIf="offer?.sightseeingPlan?.length > 0" [id]="'plan' + i" class="collapse list-group list-group-flush" #listPlan>
           <li *ngFor="let point of offer?.sightseeingPlan" class="list-group-item">
@@ -81,7 +81,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="addModal" #addModal tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -110,7 +110,7 @@
             >
           </div>
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Trip plan:</label>
+            <label for="recipient-name" class="col-form-label">Sightseeing plan:</label>
             <input
               placeholder="Write after comma"
               formControlName="sightseeingPlan"
@@ -132,7 +132,7 @@
             <label for="price-input" class="col-form-label">Price:</label>
             <input
               formControlName="price"
-              type="text"
+              type="number"
               class="form-control"
               id="price-input"
             >
@@ -184,7 +184,7 @@
 </div>
 
 
-<div class="modal fade" id="editModal" #editModal tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -223,6 +223,16 @@
             >
           </div>
           <div class="mb-3">
+            <label for="edit-recipient-name" class="col-form-label">Sightseeing plan:</label>
+            <input
+              placeholder="Write after comma"
+              formControlName="sightseeingPlan"
+              type="text"
+              class="form-control"
+              id="edit-recipient-name"
+            >
+          </div>
+          <div class="mb-3">
             <label for="date-input-day-edit" class="col-form-label">Travel day:</label>
             <input
               formControlName="day"
@@ -235,19 +245,9 @@
             <label for="price-input-edit" class="col-form-label">Price:</label>
             <input
               formControlName="price"
-              type="text"
+              type="number"
               class="form-control"
               id="price-input-edit"
-            >
-          </div>
-          <div class="mb-3">
-            <label for="edit-recipient-name" class="col-form-label">Trip plan:</label>
-            <input
-              placeholder="Write after comma"
-              formControlName="sightseeingPlan"
-              type="text"
-              class="form-control"
-              id="edit-recipient-name"
             >
           </div>
           <div class="mb-3">

@@ -139,7 +139,7 @@ export class OffersPageComponent {
 
   public addToOfferShopBox(offer: IOffer): void {
     this._offerStoreService.addOffer = offer;
-    this._notificationsService.pushSuccess('Offer added', 'Offer was added to shopping cart successfully.')
+    this._notificationsService.pushSuccess('Offer added', 'Offer was added to shopping cart successfully.');
   }
 
   public getTransportType(peopleCount: number): string {
