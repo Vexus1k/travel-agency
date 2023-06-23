@@ -1,13 +1,43 @@
-.all-inclusive {
-  top: 5px;
-  right: 10px;
-  color: #FED766;
-}
+.card-group {
+  flex-flow: row wrap !important;
 
-.edit-icon {
-  top: 5px;
-  left: 10px;
-  cursor: pointer;
+  .card {
+    max-width: 370px !important;
+    flex: unset !important;
+
+    .card-image {
+
+      img {
+        transition: transform 0.25s;
+      }
+
+      &:hover img {
+        transform: scale(1.1);
+      }
+    }
+
+    .card-body {
+      &:has(.show) .arrow-icon {
+        transform: rotate(-180deg);
+      }
+
+      .arrow-icon {
+        transition: .25s;
+      }
+    }
+
+    .all-inclusive {
+      top: 5px;
+      right: 10px;
+      color: #FED766;
+    }
+
+    .edit-icon {
+      top: 5px;
+      left: 10px;
+      cursor: pointer;
+    }
+  }
 }
 
 .h-215 {
@@ -22,30 +52,12 @@
   width: fit-content !important;
 }
 
-.arrow-icon {
-  transition: .4s;
-}
-
 .refresh-button:active {
   transform: rotate(360deg);
 }
 
-.card-body:has(.show) .arrow-icon {
-  transform: rotate(-180deg);
-  transition: .4s transform;
-}
-
 .p-t-140 {
   padding-top: 140px;
-}
-
-.card {
-  max-width: 370px !important;
-  flex: unset !important;
-}
-
-.card-group {
-  flex-flow: row wrap !important;
 }
 
 .refresh-button {

@@ -6,6 +6,17 @@
   margin-top: 80px !important;
 }
 
+.card-image {
+
+  img {
+    transition: transform 0.25s;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
+  }
+}
+
 .carousel-wrapper {
   border-radius: 10px;
 

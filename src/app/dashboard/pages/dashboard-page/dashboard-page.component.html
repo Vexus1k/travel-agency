@@ -32,7 +32,9 @@
 
 <div class="card-group justify-content-center d-flex gap-4 opacity-animation pb-4">
   <div class="card d-flex" *ngFor="let place of mostPickedPlacesList; let i = index">
-    <img [src]="place?.url" class="h-215 card-img-top" [alt]="place?.id">
+    <div class="card-image overflow-hidden">
+      <img [src]="place?.url" class="h-215 card-img-top" [alt]="place?.id">
+    </div>
     <div class="card-body">
       <h5 class="card-title">{{ place?.name }}</h5>
       <p class="card-text">{{ place?.description | capitalize }}</p>

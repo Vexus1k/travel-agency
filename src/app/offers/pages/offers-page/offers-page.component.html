@@ -25,7 +25,9 @@
 
   <div class="card-group justify-content-center d-flex gap-4 opacity-animation pb-4">
     <div class="card d-flex" *ngFor="let offer of offers; let i = index">
-      <img [src]="offer?.url" class="card-img-top h-215" [alt]="offer?.name">
+      <div class="card-image overflow-hidden">
+        <img [src]="offer?.url" class="card-img-top h-215" [alt]="offer?.name">
+      </div>
       <div class="card-body">
         <h5 class="card-title">{{ offer?.name }}</h5>
         <p class="card-text">{{ offer?.description | capitalize }}</p>
@@ -45,7 +47,7 @@
           <i class="ri-arrow-down-s-line arrow-icon fs-2"></i>
           <span class="ps-2">Sightseeing plan</span>
         </p>
-        <ul *ngIf="offer?.sightseeingPlan?.length > 0" [id]="'plan' + i" class="collapse list-group list-group-flush" #listPlan>
+        <ul *ngIf="offer?.sightseeingPlan?.length > 0" [id]="'plan' + i" class="collapse list-group list-group-flush">
           <li *ngFor="let point of offer?.sightseeingPlan" class="list-group-item">
             {{ point }}
           </li>
