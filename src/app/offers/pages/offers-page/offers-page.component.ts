@@ -10,6 +10,8 @@ import { finalize } from "rxjs/operators";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { isEqual } from 'lodash';
 import { IsInArrayPipe } from "../../core/pipes/is-in-array.pipe";
+import { CloudinaryService } from "../../core/services/CloudinaryService";
+import { OfferService } from "../../core/services/OfferService";
 
 @Component({
   selector: 'app-offers-page',
@@ -40,7 +42,9 @@ export class OffersPageComponent {
     private readonly _offerStoreService: OfferStoreService,
     private readonly _route: ActivatedRoute,
     private readonly _firestore: AngularFirestore,
-    private readonly _isInArray: IsInArrayPipe
+    private readonly _isInArray: IsInArrayPipe,
+    private readonly _cloudinaryService: CloudinaryService,
+    private readonly _offerService: OfferService
   ) {
     this.addOfferForm = this._formBuilder.group({
       name: new FormControl('', [Validators.required]),
@@ -84,7 +88,7 @@ export class OffersPageComponent {
     }
 
     if (this.pickedFileFromAddModal) {
-      this._dataService.addPhotoToCloudinary(this.pickedFileFromAddModal).subscribe((res) => {
+      this._cloudinaryService.addPhotoToCloudinary(this.pickedFileFromAddModal).subscribe((res) => {
         formValue.url = res?.['url'];
 
         this.addOfferProcess(formValue);
@@ -103,9 +107,7 @@ export class OffersPageComponent {
         }
 
         if (isEqual(offer, document.data())) {
-          this._dataService.deleteOffer(dbName, document.id).pipe(finalize(() => {
-            // sub.unsubscribe(); // No need to unsubscribe from a non-existing subscription
-          })).subscribe(() => {
+          this._offerService.deleteOffer(dbName, document.id).subscribe(() => {
             this.offers.forEach((a, index) => {
 
               if (a.id && !offer.hasOwnProperty('id')) {
@@ -181,7 +183,7 @@ export class OffersPageComponent {
         this._notificationsService.pushSuccess('Offer edited', 'Offer was edited successfully.');
         this.editOfferProcess(formValue);
       } else {
-        this._dataService.addPhotoToCloudinary(this.pickedFileFromEditModal).subscribe((res) => {
+        this._cloudinaryService.addPhotoToCloudinary(this.pickedFileFromEditModal).subscribe((res) => {
           formValue.url = res?.['url'];
 
           this.editOfferProcess(formValue);
@@ -236,7 +238,7 @@ export class OffersPageComponent {
   }
 
   private addOfferProcess(formValue: IOffer): void {
-    this._dataService.addOffer(formValue).then(() => {
+    this._offerService.addOffer(formValue).then(() => {
       this.pickedFileFromAddModal = null;
       this._notificationsService.pushSuccess('Offer added', 'Offer was added successfully.');
       this.resetAddOfferForm();
@@ -251,7 +253,7 @@ export class OffersPageComponent {
       false,
       this._isInArray.transform(this.oldEditedValue, this.mostPickedPlaces) ? 'Most-Picked-Places' : 'Offers'
     );
-    this._dataService.addOffer(
+    this._offerService.addOffer(
       formValue,
       this._isInArray.transform(this.oldEditedValue, this.mostPickedPlaces) ? '/Most-Picked-Places' : '/Offers'
     ).then(() => {

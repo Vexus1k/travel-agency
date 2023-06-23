@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { OfferStoreService } from "../../core/services/OfferStoreService";
 import { NotificationService } from "../../../core/services/NotificationService";
-import { DataService } from "../../../core/services/DataService";
 import { IOffer } from "../../../core/interfaces";
 import * as emailJS from "emailjs-com";
 import { FormBuilder, FormGroup } from "@angular/forms";
@@ -10,6 +9,7 @@ import { IsInArrayPipe } from "../../core/pipes/is-in-array.pipe";
 import { isEqual } from "lodash";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { ActivatedRoute } from "@angular/router";
+import { OfferService } from "../../core/services/OfferService";
 
 @Component({
   selector: 'app-shopping-cart-page',
@@ -29,11 +29,11 @@ export class ShoppingCartPageComponent implements OnInit {
   constructor(
     private readonly _offerStoreService: OfferStoreService,
     private readonly _notificationsService: NotificationService,
-    private readonly _dataService: DataService,
     private readonly _fb: FormBuilder,
     private readonly _firestore: AngularFirestore,
     private readonly _isInArray: IsInArrayPipe,
-    private readonly _route: ActivatedRoute
+    private readonly _route: ActivatedRoute,
+    private readonly _offerService: OfferService
   ) {
     this.emailForm = this._fb.group({
       name: [''],
@@ -109,12 +109,12 @@ export class ShoppingCartPageComponent implements OnInit {
           }
 
           if (isEqual(offer, document.data())) {
-            this._dataService.deleteOffer(dbName, document.id).subscribe();
+            this._offerService.deleteOffer(dbName, document.id).subscribe();
 
             if (offer?.peopleCount) {
-              this._dataService.addOffer({...offer, peopleCount: (+offer.peopleCount + +count).toString() }, dbName);
+              this._offerService.addOffer({...offer, peopleCount: (+offer.peopleCount + +count).toString() }, dbName);
             } else {
-              this._dataService.addOffer({...offer, peopleCount: count.toString() }, dbName);
+              this._offerService.addOffer({...offer, peopleCount: count.toString() }, dbName);
             }
           }
         });
